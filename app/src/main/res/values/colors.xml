@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <item name="text_name_color" type="color">#000000</item>
+   <item name="black" type="color">#000000</item>
+   <item name="colorPrimary" type="color">#FF00FF</item>
+   <item name="counterOverlow" type="color">#FF0000</item>
+   <item name="counterTextAppearance" type="color">#BDBDBD</item>
+   <item name="button_background" type="color">#82B1FF</item>
+</resources>

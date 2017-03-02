@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   <string name="app_name">Simple Tweets</string>
+   <string name="title_activity_timeline">Home Timeline</string>
+   <string name="login_label">Connect to Twitter</string>
+   <string name="action_add_tweet">Add Tweet</string>
+   <string name="edit_text_hint">What do you think?</string>
+   <string name="button_tweet">Tweet</string>
+
+   <!-- TODO: Remove or change this placeholder text -->
+   <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
