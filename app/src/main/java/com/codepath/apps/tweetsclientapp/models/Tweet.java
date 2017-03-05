@@ -13,52 +13,12 @@ import java.util.ArrayList;
  * Created by keyulun on 2017/2/27.
  */
 
-/*
-"text": "just another test",
-    "contributors": null,
-    "id": 240558470661799936,
-    "retweet_count": 0,
-    "in_reply_to_status_id_str": null,
-    "geo": null,
-    "retweeted": false,
-    "in_reply_to_user_id": null,
-    "place": null,
-    "source": "OAuth Dancer Reborn",
-    "user": {
-      "name": "OAuth Dancer",
-      "profile_sidebar_fill_color": "DDEEF6",
-      "profile_background_tile": true,
-      "profile_sidebar_border_color": "C0DEED",
-      "profile_image_url": "http://a0.twimg.com/profile_images/730275945/oauth-dancer_normal.jpg",
-      "created_at": "Wed Mar 03 19:37:35 +0000 2010",
-      "location": "San Francisco, CA",
-      "follow_request_sent": false,
-      "id_str": "119476949",
-      "is_translator": false,
-      "profile_link_color": "0084B4",
-      "entities": {
-        "url": {
-          "urls": [
-            {
-              "expanded_url": null,
-              "url": "http://bit.ly/oauth-dancer",
-              "indices": [
-                0,
-                26
-              ],
-              "display_url": null
-            }
-          ]
-        },
-        "description": null
-      },
-*/
-
-// Parse the Json = store the data
 public class Tweet implements Parcelable {
    private Long uid;
    private String body;
    private User user;
+   private Long favorite_cnt;
+   private Long retweet_cnt;
    private String createAt;
 
    public Long getUid() {
@@ -77,11 +37,45 @@ public class Tweet implements Parcelable {
       return createAt;
    }
 
+   public Long getFavorite_cnt() {
+      return favorite_cnt;
+   }
+
+   public Long getRetweet_cnt() {
+      return retweet_cnt;
+   }
+
+   public void setUid(Long uid) {
+      this.uid = uid;
+   }
+
+   public void setBody(String body) {
+      this.body = body;
+   }
+
+   public void setUser(User user) {
+      this.user = user;
+   }
+
+   public void setCreateAt(String createAt) {
+      this.createAt = createAt;
+   }
+
+   public void setFavorite_cnt(Long favorite_cnt) {
+      this.favorite_cnt = favorite_cnt;
+   }
+
+   public void setRetweet_cnt(Long retweet_cnt) {
+      this.retweet_cnt = retweet_cnt;
+   }
+
    public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
       Tweet tweet = new Tweet();
 
       try {
          tweet.uid = jsonObject.getLong("id");
+         tweet.favorite_cnt = jsonObject.getLong("favorite_count");
+         tweet.retweet_cnt = jsonObject.getLong("retweet_count");
          tweet.body = jsonObject.getString("text");
          tweet.createAt = jsonObject.getString("created_at");
          tweet.user = User.formJSON(jsonObject.getJSONObject("user"));
@@ -109,6 +103,10 @@ public class Tweet implements Parcelable {
       return arrayList;
    }
 
+   public Tweet() {
+   }
+
+
    @Override
    public int describeContents() {
       return 0;
@@ -116,23 +114,24 @@ public class Tweet implements Parcelable {
 
    @Override
    public void writeToParcel(Parcel dest, int flags) {
-      dest.writeLong(this.uid);
+      dest.writeValue(this.uid);
       dest.writeString(this.body);
       dest.writeParcelable(this.user, flags);
+      dest.writeValue(this.favorite_cnt);
+      dest.writeValue(this.retweet_cnt);
       dest.writeString(this.createAt);
    }
 
-   public Tweet() {
-   }
-
    protected Tweet(Parcel in) {
-      this.uid = in.readLong();
+      this.uid = (Long) in.readValue(Long.class.getClassLoader());
       this.body = in.readString();
       this.user = in.readParcelable(User.class.getClassLoader());
+      this.favorite_cnt = (Long) in.readValue(Long.class.getClassLoader());
+      this.retweet_cnt = (Long) in.readValue(Long.class.getClassLoader());
       this.createAt = in.readString();
    }
 
-   public static final Parcelable.Creator<Tweet> CREATOR = new Parcelable.Creator<Tweet>() {
+   public static final Creator<Tweet> CREATOR = new Creator<Tweet>() {
       @Override
       public Tweet createFromParcel(Parcel source) {
          return new Tweet(source);

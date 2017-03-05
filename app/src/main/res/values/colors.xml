@@ -6,4 +6,5 @@
    <item name="counterOverlow" type="color">#FF0000</item>
    <item name="counterTextAppearance" type="color">#BDBDBD</item>
    <item name="button_background" type="color">#82B1FF</item>
+   <item name="screen_name" type="color">#BDBDBD</item>
 </resources>

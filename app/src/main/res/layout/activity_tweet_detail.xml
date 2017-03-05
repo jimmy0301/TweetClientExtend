@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codepath.apps.tweetsclientapp.activities.TweetDetailActivity">
+
+   <android.support.v7.widget.Toolbar
+       android:id="@+id/toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="?attr/actionBarSize"
+       android:background="?attr/colorPrimary"
+       android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+       android:titleTextColor="@android:color/white"
+       android:title="12345"
+       app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+   <ImageView
+       android:id="@+id/ivDTProfileImg"
+       android:layout_below="@+id/toolbar"
+       android:layout_width="@dimen/detail_imageview_width"
+       android:layout_height="@dimen/detail_imageview_height"
+       android:layout_margin="@dimen/imageview_margin"/>
+
+   <TextView
+       android:id="@+id/tvDTName"
+       android:textSize="@dimen/text_size"
+       android:layout_below="@+id/toolbar"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/tvContent"
+       android:layout_alignStart="@+id/tvContent"
+       android:layout_toRightOf="@+id/ivDTProfileImg"
+       android:layout_marginBottom="@dimen/item_texview_margin_top_bottom"
+       android:layout_marginTop="@dimen/item_texview_margin_top_bottom"
+       android:text="Billy"
+       android:textColor="@color/text_name_color"
+       android:textStyle="bold"/>
+
+   <TextView
+       android:id="@+id/tvDTScreenName"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/tvDTName"
+       android:layout_alignLeft="@+id/tvDTName"
+       android:textSize="@dimen/text_size"
+       android:text="screen_name"
+       android:layout_toRightOf="@+id/ivDTProfileImg"
+       android:textColor="@color/screen_name"/>
+
+   <TextView
+       android:id="@+id/tvDTContent"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/tvDTScreenName"
+       android:layout_marginTop="@dimen/tvContent_margin_top"
+       android:textSize="@dimen/text_size"
+       android:layout_marginBottom="@dimen/tvContent_margin_bottom"
+       android:layout_toRightOf="@+id/ivDTProfileImg"
+       android:autoLink="all"
+       android:linksClickable="true"
+       android:text="New Text"/>
+
+   <TextView
+       android:id="@+id/tvDTFavorite"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/ivDTProfileImg"
+       android:layout_below="@id/tvDTContent"
+       android:textSize="@dimen/text_size"
+       android:textStyle="bold"/>
+
+   <TextView
+       android:id="@+id/tvDTRetweet"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/ivDTProfileImg"
+       android:layout_below="@id/tvDTFavorite"
+       android:textSize="@dimen/text_size"
+       android:textStyle="bold"/>
+
+</RelativeLayout>

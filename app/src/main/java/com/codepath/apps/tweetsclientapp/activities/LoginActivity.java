@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.View;
 
 import com.codepath.apps.tweetsclientapp.R;
-import com.codepath.apps.tweetsclientapp.TwitterClient;
+import com.codepath.apps.tweetsclientapp.networks.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
@@ -31,7 +31,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
    public void onLoginSuccess() {
       Intent i = new Intent(this, TimelineActivity.class);
       startActivity(i);
-      //Toast.makeText(this, "Login Success", Toast.LENGTH_LONG).show();
    }
 
    // OAuth authentication flow failed, handle the error

@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.codepath.apps.tweetsclientapp.activities.TimelineActivity">
 
    <android.support.design.widget.AppBarLayout
@@ -28,7 +27,6 @@
 
    <android.support.v4.widget.SwipeRefreshLayout
        android:id="@+id/swipeContainer"
-       android:layout_alignBottom="@+id/appbar"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -40,17 +38,16 @@
           android:layout_alignBottom="@+id/toolbar"
           android:scrollbars="vertical"/>
 
-
-
    </android.support.v4.widget.SwipeRefreshLayout>
 
    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_gravity="bottom|right"
-       android:layout_margin="16dp"
+       android:layout_margin="@dimen/floating_action_button_margin"
        android:src="@drawable/ic_add_white_24dp"
-       app:layout_anchor="@id/rvTweets"
+       app:layout_anchor="@+id/rvTweets"
        app:layout_anchorGravity="bottom|right|end"
        app:layout_behavior="com.codepath.apps.tweetsclientapp.libs.ScrollAwareFABBehavior"/>
 

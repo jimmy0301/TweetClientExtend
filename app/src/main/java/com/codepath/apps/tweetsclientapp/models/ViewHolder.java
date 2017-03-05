@@ -14,6 +14,7 @@ import com.codepath.apps.tweetsclientapp.R;
 public class ViewHolder extends RecyclerView.ViewHolder {
    private ImageView imageView;
    private TextView tvName;
+   private TextView tvScreenName;
    private TextView tvContent;
    private TextView tvTime;
 
@@ -22,6 +23,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
       imageView = (ImageView) itemView.findViewById(R.id.ivProfileImg);
       tvName = (TextView) itemView.findViewById(R.id.tvName);
+      tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
       tvContent = (TextView) itemView.findViewById(R.id.tvContent);
       tvTime = (TextView) itemView.findViewById(R.id.tvTime);
    }
@@ -32,6 +34,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
    public TextView getTvName() {
       return tvName;
+   }
+
+   public TextView getTvScreenName() {
+      return tvScreenName;
    }
 
    public TextView getTvContent() {

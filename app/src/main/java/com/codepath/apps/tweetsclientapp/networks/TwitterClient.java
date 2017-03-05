@@ -1,8 +1,4 @@
-package com.codepath.apps.tweetsclientapp;
-
-import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
-import org.scribe.builder.api.TwitterApi;
+package com.codepath.apps.tweetsclientapp.networks;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +7,10 @@ import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import static com.loopj.android.http.AsyncHttpClient.log;
+import org.scribe.builder.api.Api;
+import org.scribe.builder.api.TwitterApi;
+
+import java.io.UnsupportedEncodingException;
 
 /*
  * 
@@ -38,11 +37,22 @@ public class TwitterClient extends OAuthBaseClient {
 
    public void getHomeTimelinelist(AsyncHttpResponseHandler handler) {
       String apiUrl = getApiUrl("statuses/home_timeline.json");
-      // Can specify query string params directly or through RequestParams.
       RequestParams params = new RequestParams();
       params.put("count", "10");
       params.put("since_id", 1);
       getClient().get(apiUrl, params, handler);
+   }
+
+   public void getUserProfile(AsyncHttpResponseHandler handler) {
+      String apiUrl = getApiUrl("account/verify_credentials.json");
+      getClient().get(apiUrl, handler);
+   }
+
+   public void postTweet(String content, AsyncHttpResponseHandler handler) throws UnsupportedEncodingException {
+      String apiUrl = getApiUrl("statuses/update.json");
+      RequestParams params = new RequestParams();
+      params.put("status", content);
+      getClient().post(apiUrl, params, handler);
    }
 
    public void getMoreHomeTimelinelist(Long max_id, AsyncHttpResponseHandler handler) {
@@ -54,13 +64,4 @@ public class TwitterClient extends OAuthBaseClient {
       Log.d("query string", params.toString());
       getClient().get(apiUrl, params, handler);
    }
-
-	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-    * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
-	 *    i.e RequestParams params = new RequestParams("foo", "bar");
-	 * 3. Define the request method and make a call to the client
-	 *    i.e client.get(apiUrl, params, handler);
-	 *    i.e client.post(apiUrl, params, handler);
-	 */
 }

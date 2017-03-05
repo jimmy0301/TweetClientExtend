@@ -3,7 +3,6 @@ package com.codepath.apps.tweetsclientapp.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,10 @@ import java.util.Locale;
  * Created by keyulun on 2017/2/27.
  */
 
-public class TweetsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TweetsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
    private List<Tweet> mTweets;
    private Context mContext;
+   private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener = null;
 
 
    public TweetsRecyclerAdapter(Context context, List<Tweet> tweets) {
@@ -45,6 +45,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
       View view = layoutInflater.inflate(R.layout.item_tweet, parent, false);
       viewHolder = new ViewHolder(view);
 
+      view.setOnClickListener(this);
       return viewHolder;
    }
 
@@ -57,13 +58,15 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
    private void configureViewHolder(ViewHolder viewHolder, int position) {
       Tweet tweet = mTweets.get(position);
       if (tweet != null) {
-         Log.d("adapter", "the tweet id: " + tweet.getUid());
          viewHolder.getTvContent().setText(tweet.getBody());
          viewHolder.getTvName().setText(tweet.getUser().getName());
+         viewHolder.getTvScreenName().setText("@" + tweet.getUser().getScreenName());
          viewHolder.getTvTime().setText(getRelativeTimeAgo(tweet.getCreateAt()));
          viewHolder.getImageView().setImageResource(0);
          Glide.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.getImageView());
       }
+
+      viewHolder.itemView.setTag(tweet);
    }
 
    // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
@@ -84,16 +87,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
       return relativeDate;
    }
 
-   public void clear() {
-      mTweets.clear();
-      //notifyDataSetChanged();
-   }
-
-   public void addAll(List<Tweet> list) {
-      mTweets.addAll(list);
-      //notifyDataSetChanged();
-   }
-
    private Context getContext() {
       return mContext;
    }
@@ -101,5 +94,20 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
    @Override
    public int getItemCount() {
       return mTweets.size();
+   }
+
+   @Override
+   public void onClick(View v) {
+      if (onRecyclerViewItemClickListener != null) {
+         onRecyclerViewItemClickListener.onItemClick(v, (Tweet)v.getTag());
+      }
+   }
+
+   public static interface OnRecyclerViewItemClickListener {
+      void onItemClick(View view, Tweet tweet);
+   }
+
+   public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+      this.onRecyclerViewItemClickListener = listener;
    }
 }

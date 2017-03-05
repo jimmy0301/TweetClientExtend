@@ -9,16 +9,17 @@
    <ImageView
        android:id="@+id/ivUserImage"
        android:layout_width="@dimen/image_width"
-       android:layout_height="@dimen/image_height"/>
+       android:layout_height="@dimen/image_height"
+       android:layout_margin="5dp"/>
 
    <ImageView
        android:id="@+id/ivCancel"
-       android:layout_width="20dp"
-       android:layout_height="20dp"
+       android:layout_width="@dimen/imageview_cancel_width"
+       android:layout_height="@dimen/imageview_cancel_height"
        android:src="@drawable/ic_cancel"
        android:clickable="true"
-       android:layout_marginRight="28dp"
-       android:layout_marginEnd="28dp"
+       android:layout_marginRight="@dimen/imageview_cancel_margin_right"
+       android:layout_marginEnd="@dimen/imageview_cancel_margin_end"
        android:layout_below="@+id/tvUserName"
        android:layout_alignParentRight="true"
        android:layout_alignParentEnd="true"/>
@@ -31,6 +32,17 @@
        android:text="@string/hello_blank_fragment"
        android:textColor="@color/text_name_color"
        android:textStyle="bold"/>
+
+   <TextView
+       android:id="@+id/tvNickName"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_toRightOf="@+id/ivUserImage"
+       android:layout_below="@+id/tvUserName"
+       android:text="@string/hello_blank_fragment"
+       android:textColor="@color/text_name_color"
+       android:textStyle="bold"/>
+
 
    <android.support.design.widget.TextInputLayout
        android:id="@+id/tiLayout"
@@ -45,7 +57,7 @@
       <EditText
           android:id="@+id/etContent"
           android:layout_width="match_parent"
-          android:layout_height="200dp"
+          android:layout_height="@dimen/edittext_height"
           android:gravity="top|left"
           android:textColorHint="@color/counterTextAppearance"
           android:hint="@string/edit_text_hint"
@@ -57,7 +69,7 @@
           android:layout_height="wrap_content"
           android:layout_below="@+id/etContent"
           android:layout_gravity="bottom|right"
-          android:layout_marginRight="10dp"
+          android:layout_marginRight="@dimen/btn_tweet_margin_right"
           android:background="@color/button_background"
           android:text="@string/button_tweet"
           android:textColor="@android:color/white"/>
