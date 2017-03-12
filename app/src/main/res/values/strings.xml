@@ -4,7 +4,7 @@
    <string name="app_name">Simple Tweets</string>
    <string name="title_activity_timeline">Home Timeline</string>
    <string name="login_label">Connect to Twitter</string>
-   <string name="action_add_tweet">Add Tweet</string>
+   <string name="action_show_profile">Profile</string>
    <string name="edit_text_hint">What do you think?</string>
    <string name="button_tweet">Tweet</string>
 

@@ -2,9 +2,10 @@
 <resources>
    <item name="text_name_color" type="color">#000000</item>
    <item name="black" type="color">#000000</item>
-   <item name="colorPrimary" type="color">#FF00FF</item>
+   <item name="colorPrimary" type="color">#2196F3</item>
    <item name="counterOverlow" type="color">#FF0000</item>
-   <item name="counterTextAppearance" type="color">#BDBDBD</item>
+   <item name="counterTextAppearance" type="color">#BDBDBDBD</item>
    <item name="button_background" type="color">#82B1FF</item>
    <item name="screen_name" type="color">#BDBDBD</item>
+   <item name="color_retweet" type="color">#4CAF50</item>
 </resources>

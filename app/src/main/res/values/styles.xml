@@ -1,6 +1,7 @@
 <resources>
 
-   <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+   <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
+      <item name="colorPrimary">@color/colorPrimary</item>
       <!--
           Theme customizations available in newer API levels can go in
           res/values-vXX/styles.xml, while customizations related to

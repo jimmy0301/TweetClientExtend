@@ -4,11 +4,11 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="activities.TimelineActivity">
 
-   <!--<item
-       android:id="@+id/action_add"
-       android:title="@string/action_add_tweet"
-       android:icon="@drawable/ic_add_white_24dp"
-       app:showAsAction="ifRoom"/>-->
-
+   <item
+       android:id="@+id/showProfile"
+       android:title="@string/action_show_profile"
+       android:icon="@drawable/ic_person_white_24dp"
+       android:onClick="onProfileView"
+       app:showAsAction="ifRoom"/>
 
 </menu>

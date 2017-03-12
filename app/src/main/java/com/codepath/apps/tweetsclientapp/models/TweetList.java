@@ -23,7 +23,7 @@ import java.util.List;
  * Note: All models **must extend from** `BaseModel` as shown below.
  * 
  */
-@Table(database = TweetDatabase.class)
+@Table(database = TweetDatabase.class, useBooleanGetterSetters = true)
 public class TweetList extends BaseModel {
 
    private static final int NUM_ITEMS = 10;
@@ -53,6 +53,12 @@ public class TweetList extends BaseModel {
 
    @Column
    private Long retweetCnt;
+
+   @Column
+   private boolean favorited;
+
+   @Column
+   private boolean retweeted;
 
    public TweetList() {
       super();
@@ -107,6 +113,14 @@ public class TweetList extends BaseModel {
       return retweetCnt;
    }
 
+   public boolean isFavorited() {
+      return favorited;
+   }
+
+   public boolean isRetweeted() {
+      return retweeted;
+   }
+
    public void setId(Long id) {
       this.id = id;
    }
@@ -133,6 +147,14 @@ public class TweetList extends BaseModel {
 
    public void setRetweetCnt(Long retweetCnt) {
       this.retweetCnt = retweetCnt;
+   }
+
+   public void setFavorited(boolean favorited) {
+      this.favorited = favorited;
+   }
+
+   public void setRetweeted(boolean retweeted) {
+      this.retweeted = retweeted;
    }
 
    /* The where class in this code below will be marked red until you first compile the project, since the code

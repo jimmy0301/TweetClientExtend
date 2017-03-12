@@ -1,9 +1,11 @@
 package com.codepath.apps.tweetsclientapp.fragments;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.tweetsclientapp.R;
 import com.codepath.apps.tweetsclientapp.applications.TwitterApplication;
-import com.codepath.apps.tweetsclientapp.models.TweetList;
+import com.codepath.apps.tweetsclientapp.models.Tweet;
 import com.codepath.apps.tweetsclientapp.models.User;
 import com.codepath.apps.tweetsclientapp.networks.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -28,18 +30,14 @@ import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddTweetFragment.PostTweetDialogListener} interface
- * to handle interaction events.
- * Use the {@link AddTweetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AddTweetFragment extends DialogFragment {
-   // TODO: Rename parameter arguments, choose names that match
-   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import static com.codepath.apps.tweetsclientapp.models.TweetList_Table.image_url;
 
+/**
+ * Created by keyulun on 2017/3/9.
+ */
+
+public class ReplyTweetFragment extends DialogFragment {
+   // TODO: Rename and change types and number of parameters
    private EditText etContent;
    private TextView tvNickName;
    private TextView tvRealName;
@@ -48,29 +46,17 @@ public class AddTweetFragment extends DialogFragment {
    private Button btnTweet;
 
    private TwitterClient client;
-
-   // TODO: Rename and change types of parameters
+   private Tweet tweet;
    private String name;
    private String screen_name;
    private String image_url;
 
-   public AddTweetFragment() {
-      // Required empty public constructor
-   }
-
-   /**
-    * Use this factory method to create a new instance of
-    * this fragment using the provided parameters.
-    *
-    *
-    * @return A new instance of fragment AddTweetFragment.
-    */
-   // TODO: Rename and change types and number of parameters
-   public static AddTweetFragment newInstance(String name, String screen_name, String image_url) {
-      AddTweetFragment fragment = new AddTweetFragment();
+   public static ReplyTweetFragment newInstance(String user_name, String screen_name, String image_url, Tweet tweet) {
+      ReplyTweetFragment fragment = new ReplyTweetFragment();
       Bundle b = new Bundle();
 
-      b.putString("name", name);
+      b.putParcelable("tweet", tweet);
+      b.putString("user_name", user_name);
       b.putString("screen_name", screen_name);
       b.putString("image_url", image_url);
 
@@ -83,7 +69,8 @@ public class AddTweetFragment extends DialogFragment {
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       if (getArguments() != null) {
-         name = getArguments().getString("name");
+         tweet = getArguments().getParcelable("tweet");
+         name = getArguments().getString("user_name");
          screen_name = getArguments().getString("screen_name");
          image_url = getArguments().getString("image_url");
       }
@@ -93,10 +80,11 @@ public class AddTweetFragment extends DialogFragment {
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
       // Inflate the layout for this fragment
-      View view = inflater.inflate(R.layout.fragment_add_tweet, container, false);
+      View view = inflater.inflate(R.layout.fragment_reply_tweet, container, false);
       return view;
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
@@ -106,6 +94,20 @@ public class AddTweetFragment extends DialogFragment {
       ivProfile = (ImageView) view.findViewById(R.id.ivUserImage);
       btnTweet = (Button) view.findViewById(R.id.btnTweet);
       etContent = (EditText) view.findViewById(R.id.etContent);
+
+
+      if(tweet.getUser().getScreenName() != null) {
+         String color_name = "<font color='#42A5F5'>";
+         color_name = color_name + "@" + tweet.getUser().getScreenName() + "</font>";
+         if (Build.VERSION.SDK_INT <= 23) {
+            etContent.setText(Html.fromHtml(color_name));
+         }
+         else {
+            etContent.setText(Html.fromHtml(color_name, Html.FROM_HTML_MODE_LEGACY));
+         }
+
+         etContent.setSelection(etContent.getText().length());
+      }
 
       if (name != null) {
          tvRealName.setText(name);
@@ -122,6 +124,7 @@ public class AddTweetFragment extends DialogFragment {
       ivCancel.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+
             dismiss();
          }
       });
@@ -131,31 +134,15 @@ public class AddTweetFragment extends DialogFragment {
          public void onClick(View v) {
             final String content = etContent.getText().toString();
             etContent.setText("");
-            final PostTweetDialogListener listener = (PostTweetDialogListener) getActivity();
 
             client = TwitterApplication.getRestClient();
 
             try {
-               client.postTweet(content, -1, new JsonHttpResponseHandler() {
+               client.postTweet(content, tweet.getUid(), new JsonHttpResponseHandler() {
                   @Override
                   public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                     User user = new User();
-
-                     user.setName(name);
-                     user.setProfileImageUrl(image_url);
-                     user.setScreenName(screen_name);
-
-                     try {
-                        String createAt = response.getString("created_at");
-                        Long id = Long.parseLong(response.getString("id_str"));
-                        /*AddTweetToDB(id, name, screen_name, image_url,
-                                content, createAt);*/
-
-                        listener.onPostTweet(user, createAt, content);
-                     } catch (JSONException e) {
-                        e.printStackTrace();
-                     }
+                    Toast.makeText(view.getContext(), "Reply the tweet successfully", Toast.LENGTH_LONG).show();
                   }
 
                   @Override
@@ -170,39 +157,5 @@ public class AddTweetFragment extends DialogFragment {
             dismiss();
          }
       });
-
-   }
-
-   private void AddTweetToDB(Long id, String name, String screen_name, String image_url,
-                             String content, String createAt) {
-      TweetList tweetList = new TweetList();
-
-      tweetList.setId(id);
-      tweetList.setName(name);
-      tweetList.setCreateAt(createAt);
-      tweetList.setContent(content);
-      tweetList.setImage_url(image_url);
-      tweetList.setScreen_name(screen_name);
-      tweetList.save();
-   }
-
-   @Override
-   public void onDetach() {
-      super.onDetach();
-   }
-
-   /**
-    * This interface must be implemented by activities that contain this
-    * fragment to allow an interaction in this fragment to be communicated
-    * to the activity and potentially other fragments contained in that
-    * activity.
-    * <p>
-    * See the Android Training lesson <a href=
-    * "http://developer.android.com/training/basics/fragments/communicating.html"
-    * >Communicating with Other Fragments</a> for more information.
-    */
-   public interface PostTweetDialogListener {
-      // TODO: Update argument type and name
-      void onPostTweet(User user, String createAt, String tweetContent);
    }
 }

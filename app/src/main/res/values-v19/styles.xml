@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- res/values-v19/styles.xml -->
+   <style name="AppTheme" parent="AppBaseTheme">
+      <item name="android:windowTranslucentStatus">true</item>
+      <item name="colorPrimary">@color/colorPrimary</item>
+   </style>
+
+</resources>

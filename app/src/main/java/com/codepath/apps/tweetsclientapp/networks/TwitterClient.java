@@ -35,11 +35,53 @@ public class TwitterClient extends OAuthBaseClient {
       super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
    }
 
-   public void getHomeTimelinelist(AsyncHttpResponseHandler handler) {
+   public void updateReTweetStatus(long id, boolean retweet, AsyncHttpResponseHandler handler) {
+      String apiUrl = null;
+      if (retweet) {
+         apiUrl = getApiUrl("statuses/retweet/" + id + ".json");
+      }
+      else {
+         apiUrl = getApiUrl("statuses/unretweet/" + id + ".json");
+      }
+      RequestParams params = new RequestParams();
+      params.put("id", id);
+
+      getClient().post(apiUrl, params, handler);
+   }
+
+   public void updateFavoriteStatus(Long id, boolean like, AsyncHttpResponseHandler handler) {
+      String apiUrl = null;
+      if (like) {
+         apiUrl = getApiUrl("favorites/create.json");
+      }
+      else {
+         apiUrl = getApiUrl("favorites/destroy.json");
+      }
+      RequestParams params = new RequestParams();
+      params.put("id", id);
+      getClient().post(apiUrl, params, handler);
+   }
+
+   public void getUserTimeline(String screen_name, AsyncHttpResponseHandler handler) {
+      String apiUrl = getApiUrl("statuses/user_timeline.json");
+      RequestParams params = new RequestParams();
+      params.put("count", "10");
+      params.put("screen_name", screen_name);
+      getClient().get(apiUrl, params, handler);
+   }
+
+   public void getHomeTimeline(AsyncHttpResponseHandler handler) {
       String apiUrl = getApiUrl("statuses/home_timeline.json");
       RequestParams params = new RequestParams();
       params.put("count", "10");
       params.put("since_id", 1);
+      getClient().get(apiUrl, params, handler);
+   }
+
+   public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
+      String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+      RequestParams params = new RequestParams();
+      params.put("count", "10");
       getClient().get(apiUrl, params, handler);
    }
 
@@ -48,20 +90,42 @@ public class TwitterClient extends OAuthBaseClient {
       getClient().get(apiUrl, handler);
    }
 
-   public void postTweet(String content, AsyncHttpResponseHandler handler) throws UnsupportedEncodingException {
+
+
+   public void postTweet(String content, long id, AsyncHttpResponseHandler handler) throws UnsupportedEncodingException {
       String apiUrl = getApiUrl("statuses/update.json");
       RequestParams params = new RequestParams();
+      if (id != -1) {
+         params.put("in_reply_to_status_id", id);
+      }
+
       params.put("status", content);
       getClient().post(apiUrl, params, handler);
    }
 
-   public void getMoreHomeTimelinelist(Long max_id, AsyncHttpResponseHandler handler) {
+   public void getMoreHomeTimeline(Long max_id, AsyncHttpResponseHandler handler) {
       String apiUrl = getApiUrl("statuses/home_timeline.json");
       // Can specify query string params directly or through RequestParams.
       RequestParams params = new RequestParams();
       params.put("count", "10");
       params.put("max_id", max_id);
-      Log.d("query string", params.toString());
+      getClient().get(apiUrl, params, handler);
+   }
+
+   public void getMoreMentionsTimeline(Long max_id, AsyncHttpResponseHandler handler) {
+      String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+      RequestParams params = new RequestParams();
+      params.put("count", "10");
+      params.put("max_id", max_id);
+      getClient().get(apiUrl, params, handler);
+   }
+
+   public void getMoreUserTimeline(String screen_name, Long max_id, AsyncHttpResponseHandler handler) {
+      String apiUrl = getApiUrl("statuses/user_timeline.json");
+      RequestParams params = new RequestParams();
+      params.put("count", "10");
+      params.put("screen_name", screen_name);
+      params.put("max_id", max_id);
       getClient().get(apiUrl, params, handler);
    }
 }

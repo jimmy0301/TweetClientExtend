@@ -13,17 +13,17 @@
        android:layout_height="wrap_content"
        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-     <!--android:titleTextColor="@android:color/white"-->
      <android.support.v7.widget.Toolbar
          android:id="@+id/toolbar"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:minHeight="?attr/actionBarSize"
-         android:background="@color/colorPrimary"
+         android:layout_height="?android:attr/actionBarSize"
+         android:background="?android:attr/colorPrimary"
+         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
          app:layout_scrollFlags="scroll|enterAlways"
          app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
   </android.support.design.widget.AppBarLayout>
+
 
    <LinearLayout
        android:layout_below="@+id/appbar"
@@ -32,14 +32,13 @@
        app:layout_behavior="@string/appbar_scrolling_view_behavior"
        android:orientation="vertical">
 
-      <com.astuetz.PagerSlidingTabStrip
-          android:id="@+id/tabs"
-          android:layout_width="match_parent"
-          android:layout_height="48dp"
-          android:layout_below="@+id/appbar"
-          android:fillViewport="true"
-          app:pstsShouldExpand="true"
-          app:pstsTextAllCaps="true"/>
+   <com.astuetz.PagerSlidingTabStrip
+       android:id="@+id/tabs"
+       android:layout_below="@+id/appbar"
+       app:pstsShouldExpand="true"
+       app:pstsTextAllCaps="true"
+       android:layout_width="match_parent"
+       android:layout_height="48dp"/>
 
    <android.support.v4.view.ViewPager
        android:id="@+id/viewpager"

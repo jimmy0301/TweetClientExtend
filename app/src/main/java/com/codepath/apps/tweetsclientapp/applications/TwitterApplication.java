@@ -25,7 +25,7 @@ public class TwitterApplication extends Application {
    public void onCreate() {
       super.onCreate();
 
-      Stetho.initializeWithDefaults(this);
+      //Stetho.initializeWithDefaults(this);
       FlowManager.init(new FlowConfig.Builder(this).build());
       FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 
